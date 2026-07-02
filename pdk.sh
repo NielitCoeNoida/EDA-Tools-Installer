@@ -50,25 +50,25 @@ echo "=================================================="
 echo " Checking /labroot Directory"
 echo "=================================================="
 
-if [ ! -d "/labroot" ]; then
+if [ ! -d "/labroot/pdk" ]; then
     echo "/labroot directory not found."
-    echo "Creating /labroot ..."
+    echo "Creating /labroot/pdk ..."
 
-    sudo mkdir -p /labroot
+    sudo mkdir -p /labroot/pdk
 
     # Give ownership to current user
     sudo chown -R $USER:$USER /labroot
 
-    echo "/labroot created successfully."
+    echo "/labroot/pdk created successfully."
 else
-    echo "/labroot already exists."
+    echo "/labroot/pdk already exists."
 fi
 
 # -------------------------------
 # STEP 1: Ngspice
 # -------------------------------
 
-cd /labroot
+cd /labroot/pdk
 git clone https://git.code.sf.net/p/ngspice/ngspice ngspice_git
 cd ngspice_git
 mkdir release
@@ -82,7 +82,7 @@ sudo make install
 #  OpenTimer
 # -------------------------------
 
-cd /labroot
+cd /labroot/pdk
 git clone https://github.com/OpenTimer/OpenTimer.git
 cd OpenTimer
 mkdir build
@@ -95,7 +95,7 @@ sudo make install
 # STEP 2: Xschem
 # -------------------------------
 
-cd /labroot
+cd /labroot/pdk
 git clone https://github.com/StefanSchippers/xschem.git xschem-src
 cd xschem-src
 ./configure
@@ -108,7 +108,7 @@ sudo git pull
 # STEP 3: Magic
 # -------------------------------
 
-cd /labroot
+cd /labroot/pdk
 git clone https://github.com/RTimothyEdwards/magic.git
 cd magic
 ./configure
@@ -119,7 +119,7 @@ hash -r
 # -------------------------------
 # STEP 4: OpenPDKs
 # -------------------------------
-cd /labroot
+cd /labroot/pdk
 git clone git://opencircuitdesign.com/open_pdks
 cd open_pdks
 ./configure --enable-sky130-pdk 
