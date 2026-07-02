@@ -6,6 +6,11 @@ if [ ! -d "/labroot" ]; then
     sudo mkdir -p /labroot
 fi
 
+if [ ! -d "/labroot/installfinal" ]; then
+    echo "Creating /labroot/installfinal directory..."
+    sudo mkdir -p /labroot/installfinal
+fi
+
 sudo chown -R $USER:$USER /labroot
 cd /labroot
 
@@ -132,7 +137,7 @@ sudo apt-get install -y vim vim-gtk3 yosys gtkwave irsim
 # -------------------------------
 # STEP 4: Verilator 5.038
 # -------------------------------
-cd /labroot
+cd /labroot/installfinal
 git clone https://github.com/verilator/verilator.git
 cd verilator
 git checkout v5.038
@@ -186,7 +191,7 @@ pipx install cmake==3.26.4
 # -------------------------------
 # STEP 8: Abseil
 # -------------------------------
-cd /labroot
+cd /labroot/installfinal
 git clone https://github.com/abseil/abseil-cpp.git
 cd abseil-cpp
 git checkout 20240116.2
@@ -199,7 +204,7 @@ sudo make install
 # -------------------------------
 # STEP 9: YAML-CPP
 # -------------------------------
-cd /labroot
+cd /labroot/installfinal
 git clone https://github.com/jbeder/yaml-cpp.git
 cd yaml-cpp
 
@@ -211,7 +216,7 @@ sudo make install
 # -------------------------------
 # STEP 10: CUDD
 # -------------------------------
-cd /labroot
+cd /labroot/installfinal
 git clone https://github.com/ivmai/cudd.git
 cd cudd
 
@@ -223,7 +228,7 @@ sudo make install
 # -------------------------------
 # STEP 11: GTest
 # -------------------------------
-cd /labroot
+cd /labroot/installfinal
 git clone https://github.com/google/googletest.git
 cd googletest
 
@@ -240,7 +245,7 @@ sudo apt-get install -y \
   build-essential autoconf automake libtool \
   bison flex gawk \
   libpcre2-dev
-cd /labroot
+cd /labroot/installfinal
 wget https://github.com/swig/swig/archive/refs/tags/v4.3.0.tar.gz
 tar -xzf v4.3.0.tar.gz
 cd swig-4.3.0
@@ -264,7 +269,7 @@ source ~/.bashrc
 # -------------------------------
 # STEP 14: OR-Tools
 # -------------------------------
-cd /labroot
+cd /labroot/installfinal
 git clone https://github.com/google/or-tools.git
 cd or-tools
 git checkout v9.8
@@ -285,7 +290,7 @@ sudo make install
 # -------------------------------
 # STEP 15: Boost 1.83
 # -------------------------------
-#cd /labroot
+#cd /labroot/installfinal
 #wget https://archives.boost.io/release/1.83.0/source/boost_1_83_0.tar.gz
 #tar -xzf boost_1_83_0.tar.gz
 #cd boost_1_83_0
@@ -297,7 +302,7 @@ sudo make install
 # -------------------------------
 # STEP 15: Boost 1.87
 # -------------------------------
-cd /labroot
+cd /labroot/installfinal
 wget -O boost_1_87_0.tar.gz https://archives.boost.io/release/1.87.0/source/boost_1_87_0.tar.gz
 tar -xvf boost_1_87_0.tar.gz
 cd boost_1_87_0
@@ -309,7 +314,7 @@ sudo ./b2 -j$(nproc) install
 # -------------------------------
 # STEP 16: lemon
 # -------------------------------
-cd /labroot
+cd /labroot/installfinal
 wget https://github.com/The-OpenROAD-Project/lemon-graph/archive/refs/heads/master.tar.gz
 tar -xzf master.tar.gz
 cd lemon-graph-master
@@ -332,7 +337,7 @@ export PATH=$HOME/.local/bin:$PATH
 # Necessary Pre-requisites
 # -------------------------------
 sudo apt remove -y libfmt-dev libspdlog-dev
-cd /labroot
+cd /labroot/installfinal
 git clone https://github.com/gabime/spdlog.git
 cd spdlog
 mkdir build && cd build
@@ -343,7 +348,7 @@ sudo make install
 # -------------------------------
 # STEP 17: OpenROAD
 # -------------------------------
-cd /labroot
+cd /labroot/installfinal
 git clone https://github.com/The-OpenROAD-Project/OpenROAD.git
 cd OpenROAD
 
@@ -365,7 +370,7 @@ make -j$JOBS 2>&1 | tee build.log
 sudo make install
 
 
-cd /labroot
+cd /labroot/installfinal
 sudo apt-get install -y \
 libnglib-dev netgen-headers
 
