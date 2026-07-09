@@ -9,7 +9,7 @@ echo "#   - WSL2                                                   #"
 echo "#   - Multi-user Linux Labs                                  #"
 echo "#============================================================#"
 
-set -uo pipefail
+set -euo pipefail
 
 echo "=================================================="
 echo " Updating System Packages"
@@ -119,128 +119,128 @@ hash -r
 # -------------------------------
 # STEP 4: OpenPDKs
 # -------------------------------
-cd /labroot/pdk
-git clone git://opencircuitdesign.com/open_pdks
-cd open_pdks
-./configure --enable-sky130-pdk 
-make
-sudo make install
+#cd /labroot/pdk
+#git clone git://opencircuitdesign.com/open_pdks
+#cd open_pdks
+#./configure --enable-sky130-pdk 
+#make
+#sudo make install
 
-rm -f ~/xschemrc
+#rm -f ~/xschemrc
 
-echo "=========================================="
-echo "Creating xschem launcher wrapper..."
-echo "=========================================="
+#echo "=========================================="
+#echo "Creating xschem launcher wrapper..."
+#echo "=========================================="
 
 # Backup original xschem binary if not already backed up
-if [ -f /usr/local/bin/xschem ] && [ ! -f /usr/local/bin/xschem_bin ]; then
-    sudo mv /usr/local/bin/xschem /usr/local/bin/xschem_bin
-fi
+#if [ -f /usr/local/bin/xschem ] && [ ! -f /usr/local/bin/xschem_bin ]; then
+ #   sudo mv /usr/local/bin/xschem /usr/local/bin/xschem_bin
+#fi
 
 # Create launcher wrapper
-sudo tee /usr/local/bin/xschem > /dev/null << 'EOF'
-#!/bin/bash
+#sudo tee /usr/local/bin/xschem > /dev/null << 'EOF'
+##!/bin/bash
 
-echo "=================================="
-echo "        XSCHEM LAUNCHER"
-echo "=================================="
-echo "1. Normal xschem"
-echo "2. SKY130-enabled xschem"
-echo ""
+#echo "=================================="
+#echo "        XSCHEM LAUNCHER"
+#echo "=================================="
+#echo "1. Normal xschem"
+#echo "2. SKY130-enabled xschem"
+#echo ""
 
-read -p "Select option [1-2]: " choice
+#read -p "Select option [1-2]: " choice
 
-case $choice in
+#case $choice in
 
-    1)
-        echo "Launching normal xschem..."
+ #   1)
+  #      echo "Launching normal xschem..."
 
-        TEMP_HOME="/tmp/xschem_clean_home"
+   #     TEMP_HOME="/tmp/xschem_clean_home"
 
-        mkdir -p "$TEMP_HOME"
+    #    mkdir -p "$TEMP_HOME"
 
-        HOME="$TEMP_HOME" xschem_bin
-        ;;
+     #   HOME="$TEMP_HOME" xschem_bin
+      #  ;;
 
-    2)
-        echo "Launching SKY130-enabled xschem..."
+   # 2)
+    #    echo "Launching SKY130-enabled xschem..."
 
-        PROJECT_DIR="$HOME/xschem_sky130_project"
+     #   PROJECT_DIR="$HOME/xschem_sky130_project"
 
-        mkdir -p "$PROJECT_DIR"
+      #  mkdir -p "$PROJECT_DIR"
 
-        echo 'source /usr/local/share/pdk/sky130B/libs.tech/xschem/xschemrc' > "$PROJECT_DIR/xschemrc"
+       # echo 'source /usr/local/share/pdk/sky130B/libs.tech/xschem/xschemrc' > "$PROJECT_DIR/xschemrc"
 
-        cd "$PROJECT_DIR"
+       # cd "$PROJECT_DIR"
 
-        xschem_bin
-        ;;
+       # xschem_bin
+       # ;;
 
-    *)
-        echo "Invalid option."
-        exit 1
-        ;;
-esac
-EOF
+   # *)
+    #    echo "Invalid option."
+    #    exit 1
+     #   ;;
+#esac
+#EOF
 
 # Make wrapper executable
-sudo chmod +x /usr/local/bin/xschem
+#sudo chmod +x /usr/local/bin/xschem
 
-echo "xschem launcher wrapper installed successfully."
+#echo "xschem launcher wrapper installed successfully."
 
-echo "=========================================="
-echo "Creating Magic launcher wrapper..."
-echo "=========================================="
+#echo "=========================================="
+#echo "Creating Magic launcher wrapper..."
+#echo "=========================================="
 
 # Backup original magic binary if not already backed up
-if [ -f /usr/local/bin/magic ] && [ ! -f /usr/local/bin/magic_bin ]; then
-    sudo mv /usr/local/bin/magic /usr/local/bin/magic_bin
-fi
+#if [ -f /usr/local/bin/magic ] && [ ! -f /usr/local/bin/magic_bin ]; then
+ #   sudo mv /usr/local/bin/magic /usr/local/bin/magic_bin
+#fi
 
 # Create launcher wrapper
-sudo tee /usr/local/bin/magic > /dev/null << 'EOF'
-#!/bin/bash
+#sudo tee /usr/local/bin/magic > /dev/null << 'EOF'
+##!/bin/bash
 
-echo "=================================="
-echo "         MAGIC LAUNCHER"
-echo "=================================="
-echo "1. Normal Magic"
-echo "2. SKY130-enabled Magic"
-echo ""
+#echo "=================================="
+#echo "         MAGIC LAUNCHER"
+#echo "=================================="
+#echo "1. Normal Magic"
+#echo "2. SKY130-enabled Magic"
+#echo ""
 
-read -p "Select option [1-2]: " choice
+#read -p "Select option [1-2]: " choice
 
-case $choice in
+#case $choice in
 
-    1)
-        echo "Launching normal Magic..."
+ #   1)
+  #      echo "Launching normal Magic..."
 
-        magic_bin
-        ;;
+   #     magic_bin
+    #    ;;
 
-    2)
-        echo "Launching SKY130-enabled Magic..."
+   # 2)
+    #    echo "Launching SKY130-enabled Magic..."
 
-        PROJECT_DIR="$HOME/magic_sky130_project"
+     #   PROJECT_DIR="$HOME/magic_sky130_project"
 
-        mkdir -p "$PROJECT_DIR"
+      #  mkdir -p "$PROJECT_DIR"
 
-        cd "$PROJECT_DIR"
+       # cd "$PROJECT_DIR"
 
-        magic_bin -rcfile /usr/local/share/pdk/sky130B/libs.tech/magic/sky130B.magicrc
-        ;;
+      #  magic_bin -rcfile /usr/local/share/pdk/sky130B/libs.tech/magic/sky130B.magicrc
+       # ;;
 
-    *)
-        echo "Invalid option."
-        exit 1
-        ;;
-esac
-EOF
+   # *)
+    #    echo "Invalid option."
+     #   exit 1
+      #  ;;
+#esac
+#EOF
 
 # Make wrapper executable
-sudo chmod +x /usr/local/bin/magic
+#sudo chmod +x /usr/local/bin/magic
 
-echo "Magic launcher wrapper installed successfully."
+#echo "Magic launcher wrapper installed successfully."
 echo "===== INSTALLATION COMPLETE ====="
 echo "===== FINAL TOOL STATUS ====="
 print_tool_info() {
@@ -269,8 +269,8 @@ print_tool_info() {
 
     echo ""
 }
-print_tool_info "Magic" "magic_bin"
-print_tool_info "Xschem" "xschem_bin"
+print_tool_info "Magic" "magic"
+print_tool_info "Xschem" "xschem"
 print_tool_info "Netgen" "netgen"
 print_tool_info "Ngspice" "ngspice"
 echo "===== SETUP COMPLETE ====="
