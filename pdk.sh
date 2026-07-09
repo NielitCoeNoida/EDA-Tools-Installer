@@ -101,7 +101,7 @@ cd xschem-src
 ./configure
 make
 sudo make install
-cd /labroot/xschem-src/xschem_library
+cd /labroot/pdk/xschem-src/xschem_library
 sudo git pull
 
 # -------------------------------
