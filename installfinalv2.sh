@@ -1,5 +1,5 @@
 #!/bin/bash
-set -uo pipefail
+set -euo pipefail
 
 if [ ! -d "/labroot" ]; then
     echo "Creating /labroot directory..."
